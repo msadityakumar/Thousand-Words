@@ -15,6 +15,12 @@
 		4600D6DF1B885CA200C35678 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4600D6DE1B885CA200C35678 /* Images.xcassets */; };
 		4600D6E21B885CA200C35678 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4600D6E01B885CA200C35678 /* LaunchScreen.xib */; };
 		4600D6EE1B885CA300C35678 /* Thousand_WordsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600D6ED1B885CA300C35678 /* Thousand_WordsTests.m */; };
+		4600D6F91B88E55600C35678 /* TWTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600D6F81B88E55600C35678 /* TWTableViewController.m */; };
+		4600D6FC1B89015300C35678 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600D6FB1B89015300C35678 /* Album.m */; };
+		4600D6FF1B8A2B4600C35678 /* TWCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600D6FE1B8A2B4600C35678 /* TWCollectionViewController.m */; };
+		4600D7021B8A4A1600C35678 /* TWCollectionPhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600D7011B8A4A1600C35678 /* TWCollectionPhotoViewCell.m */; };
+		4600D7041B8A4D9500C35678 /* SampleImg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4600D7031B8A4D9500C35678 /* SampleImg.jpeg */; };
+		4600D7061B8A523000C35678 /* astronaut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4600D7051B8A523000C35678 /* astronaut.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +48,16 @@
 		4600D6E71B885CA300C35678 /* Thousand WordsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Thousand WordsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4600D6EC1B885CA300C35678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4600D6ED1B885CA300C35678 /* Thousand_WordsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Thousand_WordsTests.m; sourceTree = "<group>"; };
+		4600D6F71B88E55600C35678 /* TWTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTableViewController.h; sourceTree = "<group>"; };
+		4600D6F81B88E55600C35678 /* TWTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTableViewController.m; sourceTree = "<group>"; };
+		4600D6FA1B89015300C35678 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		4600D6FB1B89015300C35678 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		4600D6FD1B8A2B4600C35678 /* TWCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCollectionViewController.h; sourceTree = "<group>"; };
+		4600D6FE1B8A2B4600C35678 /* TWCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCollectionViewController.m; sourceTree = "<group>"; };
+		4600D7001B8A4A1600C35678 /* TWCollectionPhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCollectionPhotoViewCell.h; sourceTree = "<group>"; };
+		4600D7011B8A4A1600C35678 /* TWCollectionPhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCollectionPhotoViewCell.m; sourceTree = "<group>"; };
+		4600D7031B8A4D9500C35678 /* SampleImg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SampleImg.jpeg; sourceTree = "<group>"; };
+		4600D7051B8A523000C35678 /* astronaut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = astronaut.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +108,8 @@
 				4600D6E01B885CA200C35678 /* LaunchScreen.xib */,
 				4600D6D51B885CA200C35678 /* Thousand_Words.xcdatamodeld */,
 				4600D6CE1B885CA200C35678 /* Supporting Files */,
+				4600D6F71B88E55600C35678 /* TWTableViewController.h */,
+				4600D6F81B88E55600C35678 /* TWTableViewController.m */,
 			);
 			path = "Thousand Words";
 			sourceTree = "<group>";
@@ -99,8 +117,16 @@
 		4600D6CE1B885CA200C35678 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4600D6FA1B89015300C35678 /* Album.h */,
+				4600D6FB1B89015300C35678 /* Album.m */,
 				4600D6CF1B885CA200C35678 /* Info.plist */,
 				4600D6D01B885CA200C35678 /* main.m */,
+				4600D7051B8A523000C35678 /* astronaut.jpg */,
+				4600D7031B8A4D9500C35678 /* SampleImg.jpeg */,
+				4600D6FD1B8A2B4600C35678 /* TWCollectionViewController.h */,
+				4600D6FE1B8A2B4600C35678 /* TWCollectionViewController.m */,
+				4600D7001B8A4A1600C35678 /* TWCollectionPhotoViewCell.h */,
+				4600D7011B8A4A1600C35678 /* TWCollectionPhotoViewCell.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -203,7 +229,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4600D6DD1B885CA200C35678 /* Main.storyboard in Resources */,
+				4600D7041B8A4D9500C35678 /* SampleImg.jpeg in Resources */,
 				4600D6E21B885CA200C35678 /* LaunchScreen.xib in Resources */,
+				4600D7061B8A523000C35678 /* astronaut.jpg in Resources */,
 				4600D6DF1B885CA200C35678 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,7 +251,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4600D6D41B885CA200C35678 /* AppDelegate.m in Sources */,
+				4600D6F91B88E55600C35678 /* TWTableViewController.m in Sources */,
+				4600D7021B8A4A1600C35678 /* TWCollectionPhotoViewCell.m in Sources */,
 				4600D6D11B885CA200C35678 /* main.m in Sources */,
+				4600D6FF1B8A2B4600C35678 /* TWCollectionViewController.m in Sources */,
+				4600D6FC1B89015300C35678 /* Album.m in Sources */,
 				4600D6DA1B885CA200C35678 /* ViewController.m in Sources */,
 				4600D6D71B885CA200C35678 /* Thousand_Words.xcdatamodeld in Sources */,
 			);
