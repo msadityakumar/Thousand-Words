@@ -9,7 +9,8 @@
 #import "TWCollectionViewController.h"
 #import "TWCollectionPhotoViewCell.h"
 
-@interface TWCollectionViewController ()
+
+@interface TWCollectionViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @end
 
@@ -43,6 +44,39 @@ static NSString * const reuseIdentifier = @"Cell";
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)cameraButtonAction:(UIBarButtonItem *)sender
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    [picker setDelegate:self];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    {
+        picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    }
+    
+    
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+
+#pragma mark - UIIMAGE_PICKER_DELEGATES
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSLog(@"\npicked the image");
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    NSLog(@"\ncancelled");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+
+}
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -99,5 +133,6 @@ static NSString * const reuseIdentifier = @"Cell";
 	
 }
 */
+
 
 @end

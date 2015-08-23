@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TWCollectionViewController : UICollectionViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButtAction;
+- (IBAction)cameraButtonAction:(UIBarButtonItem *)sender;
 
 @end
