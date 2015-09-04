@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OmU-A2-AWq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OmU-A2-AWq">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--Collection View Controller-->
@@ -26,6 +27,9 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="oTQ-f6-SI2" kind="show" identifier="detailSegue" id="Bor-qu-vnA"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -48,6 +52,51 @@
             </objects>
             <point key="canvasLocation" x="2354" y="299"/>
         </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="y3j-JG-1aN">
+            <objects>
+                <viewController id="oTQ-f6-SI2" customClass="TWPhotoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="87N-Y3-RE6"/>
+                        <viewControllerLayoutGuide type="bottom" id="GMw-jj-Dou"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="REU-lu-t6J">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Lz-io-zSZ">
+                                <rect key="frame" x="0.0" y="-8" width="320" height="452"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZP-ml-jZL">
+                                <rect key="frame" x="16" y="523" width="67" height="30"/>
+                                <state key="normal" title="Add Filter">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addFilterButtAction:" destination="oTQ-f6-SI2" eventType="touchUpInside" id="hnV-Be-GfD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fNS-kD-G8p">
+                                <rect key="frame" x="264" y="523" width="43" height="30"/>
+                                <state key="normal" title="delete">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButtAction:" destination="oTQ-f6-SI2" eventType="touchUpInside" id="Odi-Qx-5iW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="imageView" destination="5Lz-io-zSZ" id="Bcl-xw-BeO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uAy-F5-DRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2934" y="283"/>
+        </scene>
         <!--Table View Controller-->
         <scene sceneID="xnG-jc-H1k">
             <objects>
@@ -63,7 +112,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="cHT-Tf-0e7" kind="show" id="avw-UJ-ZLc"/>
+                                    <segue destination="cHT-Tf-0e7" kind="show" identifier="albumChoosen" id="avw-UJ-ZLc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

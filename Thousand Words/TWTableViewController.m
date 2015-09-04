@@ -8,6 +8,7 @@
 
 #import "TWTableViewController.h"
 #import "Album.h"
+#import "TWCollectionViewController.h"
 
 @interface TWTableViewController ()<UIAlertViewDelegate>
 
@@ -55,6 +56,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -158,14 +161,22 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"albumChoosen"]) {
+        
+        
+        if ([segue.destinationViewController isKindOfClass:[TWCollectionViewController class]]) {
+            NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+            TWCollectionViewController *target = segue.destinationViewController;
+            target.albumName = [self.albumsArray objectAtIndex:path.row];
+        }
+        
+    }
 }
-*/
+
 
 @end

@@ -8,10 +8,15 @@
 
 #import "TWCollectionViewController.h"
 #import "TWCollectionPhotoViewCell.h"
+#import "Photo.h"
+#import "TWPictureDataTransformer.h"
+#import "TWCoreDataHelper.h"
+#import "TWPhotoViewController.h"
 
 
 @interface TWCollectionViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
+@property (nonatomic,strong) NSMutableArray *photos;
 @end
 
 @implementation TWCollectionViewController
@@ -28,11 +33,27 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
+    
+    NSSet *unorderedPhotos = self.albumName.photos;
+    NSSortDescriptor *date = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
+    NSArray *sortedPics = [unorderedPhotos sortedArrayUsingDescriptors:@[date]];
+    self.photos = [sortedPics mutableCopy];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(NSMutableArray *)photos
+{
+
+    if (!_photos) {
+        _photos = [[NSMutableArray alloc]init];
+    }
+    return _photos;
 }
 
 /*
@@ -66,7 +87,15 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"\npicked the image");
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    
+    if (!image) {
+        image = info[UIImagePickerControllerOriginalImage];
+    }
+    [self.photos addObject:[self photoFromImage:image]];
+    [self.collectionView reloadData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -76,7 +105,34 @@ static NSString * const reuseIdentifier = @"Cell";
     
 
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"detailSegue"]) {
+        if ([segue.destinationViewController isKindOfClass:[TWPhotoViewController class]]) {
+            TWPhotoViewController *target = segue.destinationViewController;
+            
+            NSIndexPath *indexPath = [[self.collectionView indexPathsForSelectedItems] lastObject];
+            Photo *selectedPhoto = [self.photos objectAtIndex:indexPath.row];
+            target.photo = selectedPhoto;
+        }
+    }
+    
+}
 
+
+-(Photo *)photoFromImage:(UIImage*)image
+{
+    Photo *photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:[TWCoreDataHelper managedDataContext]];
+    photo.image = image;
+    photo.date = [NSDate date];
+    photo.albumBook = self.albumName;
+    
+    NSError *error = nil;
+    if (![[photo managedObjectContext] save:&error]) {
+        NSLog(@"\n%@",error);
+    }
+    return photo;
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -88,7 +144,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return 4;
+    return [_photos count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,9 +153,9 @@ static NSString * const reuseIdentifier = @"Cell";
     TWCollectionPhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     // Configure the cell
-    
+    Photo *photo = [_photos objectAtIndex:indexPath.row];
     [cell setBackgroundColor:[UIColor redColor]];
-    cell.imageView.image = [UIImage imageNamed:@"astronaut.jpg"];
+    cell.imageView.image = photo.image;
     return cell;
 }
 
