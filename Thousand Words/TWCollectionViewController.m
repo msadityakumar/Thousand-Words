@@ -34,11 +34,19 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // Do any additional setup after loading the view.
     
+
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
     NSSet *unorderedPhotos = self.albumName.photos;
     NSSortDescriptor *date = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
     NSArray *sortedPics = [unorderedPhotos sortedArrayUsingDescriptors:@[date]];
     self.photos = [sortedPics mutableCopy];
-    
+    [self.collectionView reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning {

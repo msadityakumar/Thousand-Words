@@ -8,6 +8,7 @@
 
 #import "TWPhotoViewController.h"
 #import "Photo.h"
+#import "TWFilterCollectionViewController.h"
 
 @interface TWPhotoViewController ()
 
@@ -51,9 +52,26 @@
 - (IBAction)deleteButtAction:(id)sender {
     
     [[self.photo managedObjectContext] deleteObject:self.photo];
+    NSError *error = nil;
+    [[self.photo managedObjectContext] save:&error];
+    if (error) {
+        NSLog(@"error");
+    }
     [self.navigationController popViewControllerAnimated:YES];
     
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+
+    if ([segue.identifier isEqualToString:@"Filter segue"]) {
+        if ([segue.destinationViewController  isKindOfClass:[TWFilterCollectionViewController class]]) {
+            TWFilterCollectionViewController *targetcontroller = segue.destinationViewController;
+            targetcontroller.photo = self.photo;
+        }
+    }
+
+
+}
 
 @end
