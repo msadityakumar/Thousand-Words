@@ -7,12 +7,15 @@
 //
 
 #import "TWFilterCollectionViewController.h"
+#import "TWCollectionPhotoViewCell.h"
+#import "Photo.h"
 
 
 @interface TWFilterCollectionViewController ()
 
 
 @property (strong,nonatomic)NSMutableArray *filters;
+@property (strong,nonatomic)CIContext *context;
 
 @end
 
@@ -22,6 +25,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _filters = [[[self class]getFilters] mutableCopy];
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -38,6 +43,58 @@ static NSString * const reuseIdentifier = @"Cell";
     return _filters;
 
 }
+
+-(CIContext*)context
+{
+    if (!_context) _context = [CIContext contextWithOptions:nil];
+        
+    return _context;
+}
+
++(NSArray*)getFilters
+{
+    CIFilter *sepia = [CIFilter filterWithName:@"CISepiaTone" keysAndValues:nil];
+    
+    CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur" keysAndValues:nil];
+    
+    CIFilter *instant = [CIFilter filterWithName:@"CIPhotoEffectInstant" keysAndValues: nil];
+    
+    CIFilter *transfer = [CIFilter filterWithName:@"CIPhotoEffectTransfer" keysAndValues:nil];
+    
+    CIFilter *colorControls = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputSaturationKey,@0.5, nil];
+    CIFilter *vignette = [CIFilter filterWithName:@"CIVignetteEffect" keysAndValues:nil];
+    
+    CIFilter *noir = [CIFilter filterWithName:@"CIPhotoEffectNoir" keysAndValues:nil];
+    
+    CIFilter *colorClamp = [CIFilter filterWithName:@"CIColorClamp" keysAndValues:@"inputMaxComponents",[CIVector vectorWithX:0.9 Y:0.9 Z:0.9 W:0.9],@"inputMinComponents",[CIVector vectorWithX:0.2 Y:0.2 Z:0.2 W:0.2], nil];
+    
+    CIFilter *unsharpen = [CIFilter filterWithName:@"CIUnsharpMask" keysAndValues: nil];
+    
+    CIFilter *monoChrome = [CIFilter filterWithName:@"CIColorMonochrome" keysAndValues:nil];
+    
+    NSArray *allFilters = @[sepia,blur,instant,transfer,colorControls,vignette,noir,colorClamp,unsharpen,monoChrome];
+
+    return allFilters;
+    
+}
+
+
+-(UIImage *)filteredImageFromImage:(UIImage*)image WithFilter:(CIFilter*)filter
+{
+//getting ciimage from uiimage
+    CIImage *unfilteredImg = [[CIImage alloc]initWithCGImage:image.CGImage];
+    //applying filter
+    [filter setValue:unfilteredImg forKey:kCIInputImageKey];
+    //get the output image
+    CIImage *filteredImg = [filter outputImage];
+    CGRect extent = [filteredImg extent];
+    // creating the cgimage
+    CGImageRef cgImage = [self.context createCGImage:filteredImg fromRect:extent];
+//getting final image from cgimage
+    UIImage *finalImg =[UIImage imageWithCGImage:cgImage];
+    return finalImg;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -57,7 +114,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 #warning Incomplete method implementation -- Return the number of sections
-    return 0;
+    return 1;
 }
 
 
@@ -69,15 +126,33 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *indetifier = @"identifier";
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:indetifier forIndexPath:indexPath];
+    TWCollectionPhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:indetifier forIndexPath:indexPath];
     
     // Configure the cell
     [cell setBackgroundColor:[UIColor whiteColor]];
-    
+   // cell.imageView.image = self.photo.image;
+    cell.imageView.image = [self filteredImageFromImage:self.photo.image WithFilter:_filters[indexPath.row]];
     return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
+
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    TWCollectionPhotoViewCell *cell = (TWCollectionPhotoViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    self.photo.image = cell.imageView.image;
+    
+    NSError *error = nil;
+    
+    if (![[self.photo managedObjectContext] save:&error]) {
+        NSLog(@"%@",error);
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+
+
+}
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
